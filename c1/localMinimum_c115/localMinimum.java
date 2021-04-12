@@ -1,0 +1,61 @@
+/**
+ *
+ @author @FrozenLemonTee https://github.com/FrozenLemonTee
+ @date 2021/04/11
+ @encoding UTF-8
+ **/
+package DSAA.alg4.c1.localMinimum_c115;
+
+public class localMinimum {
+    public static int[] find(int[][] arr){
+        int line_top = 0;
+        int line_bottom = arr.length - 1;
+        int line_mid = (line_top + line_bottom) / 2;
+        while (line_top <= line_bottom){
+            int row = findByLine(arr, line_mid);
+            if (smallNear(arr, line_mid, row)){
+                return new int[] {line_mid, row};
+            }
+            if (arr[line_mid][row] > arr[line_mid - 1][row]){
+                line_bottom = line_mid - 1;
+            }else {
+                line_top = line_mid + 1;
+            }
+            line_mid = (line_top + line_bottom) / 2;
+        }
+        return new int[] {-1, -1};
+    }
+
+    private static boolean smallNear(int[][] arr, int line, int row){
+        return (line == 0 || arr[line - 1][row] > arr[line][row])
+                && (line == arr.length || arr[line + 1][row] > arr[line][row]);
+    }
+
+    private static int findByLine(int[][] arr, int line){
+        return find(arr[line]);
+    }
+
+    public static int find(int[] arr){
+        int left = 0;
+        int right = arr.length - 1;
+        int mid = (left + right) / 2;
+        while (left <= right){
+            if (smallNear(arr, mid)){
+                return mid;
+            }
+            if (arr[mid] > arr[mid + 1]){
+                left = mid + 1;
+            }else {
+                right = mid - 1;
+            }
+            mid = (left + right) / 2;
+        }
+        return -1;
+    }
+
+    private static boolean smallNear(int[] arr, int index){
+        return (index == 0 || arr[index - 1] > arr[index])
+                && (index == arr.length - 1 || arr[index] < arr[index + 1]);
+    }
+
+}
