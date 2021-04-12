@@ -61,7 +61,8 @@ public class quickUnion {
      * @param parent int[]: 父亲结点的坐标
      * **/
     public void setParent(int[] cur, int[] parent){
-        this.node[cur[0]][cur[1]] = parent;
+        this.node[cur[0]][cur[1]][0] = parent[0];
+        this.node[cur[0]][cur[1]][1] = parent[1];
     }
 
     /**
@@ -94,12 +95,14 @@ public class quickUnion {
         while (this.isChild(cur)){
             int[] pre = this.getParent(cur);
             // 此步骤进行路径压缩
-            // todo 似乎有问题
             if (this.isChild(pre)){
-                this.setParent(cur, pre);
+                int[] pre_parent = this.getParent(pre);
+                this.setParent(cur, pre_parent);
                 this.addSize(pre, - this.getSize(cur));
+                cur = pre_parent;
+            }else {
+                cur = pre;
             }
-            cur = pre;
         }
         return cur;
     }
@@ -137,6 +140,9 @@ public class quickUnion {
         }
     }
 
+    /**
+     * 将各结点情况打印出来
+     * **/
     public void show(){
         for (int i = 0; i < this.node.length; i++) {
             StringBuilder line = new StringBuilder();
@@ -151,6 +157,10 @@ public class quickUnion {
         StdOut.println("count = " + this.count);
     }
 
+    /**
+     * 随机将两个结点进行合并
+     * @param q quickUnion: 当前并查集对象
+     * **/
     public static void randUnion(quickUnion q){
         int[] cur1 = {StdRandom.uniform(q.global_size), StdRandom.uniform(q.global_size)};
         int[] cur2 = {StdRandom.uniform(q.global_size), StdRandom.uniform(q.global_size)};
