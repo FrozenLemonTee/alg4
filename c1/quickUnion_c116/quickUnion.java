@@ -16,10 +16,12 @@ public class quickUnion {
     private final int[][] size;
     /** 储存当前还有多少个独立的连通分量 **/
     private int count;
+    /** 矩阵边长大小 **/
     public final int global_size;
 
     /**
      * 构造函数，初始化并查集，矩阵大小设为 n * n
+     * @param n int: 设置矩阵边长
      * **/
     public quickUnion(int n){
         this.global_size = n;
@@ -109,7 +111,7 @@ public class quickUnion {
 
     /**
      * 判断当前两个坐标的结点是否在同一个连通分量中
-     * @param node1 itn[]: 当前结点1的坐标
+     * @param node1 int[]: 当前结点1的坐标
      * @param node2 int[]: 当前结点2的坐标
      *
      * @return boolean: 是/否
@@ -122,7 +124,7 @@ public class quickUnion {
 
     /**
      * 将两个连通分量合并
-     * @param node1 itn[]: 当前结点1的坐标
+     * @param node1 int[]: 当前结点1的坐标
      * @param node2 int[]: 当前结点2的坐标
      * **/
     public void union(int[] node1, int[] node2){
