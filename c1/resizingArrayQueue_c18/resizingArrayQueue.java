@@ -130,6 +130,7 @@ public class resizingArrayQueue<Item> implements Iterable<Item> {
      * @see resizingArrayQueue#isTooSmall()
      * @see resizingArrayQueue#isFull()
      * @see resizingArrayQueue#isEmpty()
+     * @see resizingArrayQueue#willOutOfRightBound()
      *
      * @return boolean: 返回是/否
      * **/
@@ -153,7 +154,7 @@ public class resizingArrayQueue<Item> implements Iterable<Item> {
      * **/
     public Item pop(){
         if (this.isEmpty()){
-            throw new IndexOutOfBoundsException("Queue"+ " #" + this.hashCode() + " " + "is empty!");
+            throw new IndexOutOfBoundsException("Empty queue");
         }
         this.resize();
         Item p = this.items[this.top];

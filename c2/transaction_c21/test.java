@@ -1,5 +1,6 @@
 package DSAA.alg4.c2.transaction_c21;
 
+import DSAA.alg4.c2.arraySort_c22.arraySort;
 import standard.StdOut;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class test {
         }
         StdOut.println();
         ArrayList<Integer> arr2 = new ArrayList<>(Arrays.asList(10, 5, 8, 4, 2, 0, 11));
-        arraySort.insertSort(arr2, 1);
+        arraySort.insertSort(arr2, -1);
         for (Integer i: arr2) {
             StdOut.println(i);
         }
@@ -47,10 +48,34 @@ public class test {
         for (String s: dates2) {
             arr3.add(new Date(s));
         }
-        arraySort.binarySort(arr3, 1);
+        ArrayList<Date> a1 = new ArrayList<>();
+        arraySort.binarySort(a1, 1);
+        arraySort.binarySort(arr3, -1);
         StdOut.println();
         for (Date d: arr3) {
             StdOut.println(d);
+        }
+        StdOut.println();
+        ArrayList<Integer> arr4 = new ArrayList<>(Arrays.asList(2, 6, 9, 3, 7, 4, 1, 0, 8));
+        arr4 = arraySort.mergeSort(arr4, 1);
+        for (Integer c: arr4) {
+            StdOut.println(c);
+        }
+        StdOut.println();
+        String[] dates3 = {"2021-6-28", "2019-3-4"};
+        ArrayList<Date> arr5 = new ArrayList<>();
+        for (String s: dates3) {
+            arr5.add(new Date(s));
+        }
+        arraySort.shellSort(arr5, -1);
+        for (Date d: arr5) {
+            StdOut.println(d);
+        }
+        StdOut.println();
+        ArrayList<String> arr6 = new ArrayList<>(Arrays.asList("Sam", "Lily", "Judy", "Jim", "Kate"));
+        arraySort.shellSort(arr6, -1);
+        for (String s: arr6) {
+            StdOut.println(s);
         }
     }
 }

@@ -41,5 +41,7 @@ public class test {
             qu3.pop();
             StdOut.println(qu3);
         }
+        // empty queue
+//        qu3.pop();
     }
 }
