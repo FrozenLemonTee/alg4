@@ -17,11 +17,22 @@ public class arraySort {
      *
      * @return boolean: 是/否
      * **/
-    private static <Item extends Comparable<? super Item>> boolean isMatchRule(Item i1, Item i2, int key){
+    public static <Item extends Comparable<? super Item>> boolean isMatchRule(Item i1, Item i2, int key){
         // 重整排序选项值，若为非负数（增序要求）则重整为1，否则（降序要求）重整为-1
         key = key >= 0 ? 1: -1;
         // 重整排序相对值，若为非负数（降序或相同）则重整为1，否则（增序）重整为-1
-        int compare = i1.compareTo(i2) >= 0 ? 1: -1;
+        int compare = i1.compareTo(i2) > 0 ? 1: -1;
+        return compare != key;
+    }
+
+    public static <Item extends Comparable<? super Item>> boolean isMatchRule(Item i1, Item i2, boolean include, int key){
+        // 重整排序选项值，若为非负数（增序要求）则重整为1，否则（降序要求）重整为-1
+        key = key >= 0 ? 1: -1;
+        // 重整排序相对值，若为非负数（降序或相同）则重整为1，否则（增序）重整为-1
+        int compare = i1.compareTo(i2) > 0 ? 1: -1;
+        if (include){
+            return compare != key || i1.equals(i2);
+        }
         return compare != key;
     }
 
@@ -31,23 +42,37 @@ public class arraySort {
      * @param index1 int: 待交换的元素1的索引
      * @param index2 int: 待交换的元素2的索引
      * **/
-    private static <Item> void exchange(ArrayList<Item> arr, int index1, int index2){
+    public static <Item> void exchange(ArrayList<Item> arr, int index1, int index2){
         Item tmp = arr.get(index1);
         arr.set(index1, arr.get(index2));
         arr.set(index2, tmp);
     }
 
     /**
-     * 选择排序
+     * 选择排序方法入口1
+     * **/
+    public static <Item extends Comparable<? super Item>> void selectSort(ArrayList<Item> arr, int key){
+        select(arr, key);
+    }
+
+    /**
+     * 选择排序方法入口2
+     * **/
+    public static <Item extends Comparable<? super Item>> void selectSort(ArrayList<Item> arr){
+        select(arr, 1);
+    }
+
+    /**
+     * 选择排序主方法
      * @param arr ArrayList<Item>: 待排序数组
      * @param key int: 排序选项，当传入非负数时按增序排序，当传入负数时按降序排序
      * **/
-    public static <Item extends Comparable<? super Item>> void selectSort(ArrayList<Item> arr, int key){
+    private static <Item extends Comparable<? super Item>> void select(ArrayList<Item> arr, int key){
         /*        max
         *          ↓
         * |-3  -5  0  -4 | 1  2  3  4  4  5  6  7  9 |
         * |______________|___________________________|
-        *      无序区                 有序区
+        *      无序区                有序区
         *               ↓
         * |-3  -5  -4 | 0  1  2  3  4  4  5  6  7  9 |
         * |___________|______________________________|
@@ -75,22 +100,50 @@ public class arraySort {
     }
 
     /**
-     * 插入排序
+     * 插入排序方法入口1
+     * **/
+    public static <Item extends Comparable<? super Item>> void insertSort(ArrayList<Item> arr, int key){
+        insert(arr, key);
+    }
+
+    /**
+     * 插入排序方法入口2
+     * **/
+    public static <Item extends Comparable<? super Item>> void insertSort(ArrayList<Item> arr){
+        insert(arr, 1);
+    }
+
+    /**
+     * 插入排序主方法
      * @param arr ArrayList<Item>: 待排序数组
      * @param key int: 排序选项，当传入非负数时按增序排序，当传入负数时按降序排序
      * **/
-    public static <Item extends Comparable<? super Item>> void insertSort(ArrayList<Item> arr, int key){
+    private static <Item extends Comparable<? super Item>> void insert(ArrayList<Item> arr, int key){
         for (int i = 1; i < arr.size(); i++) {
             gapInsert(arr, 1, i, key);
         }
     }
 
     /**
-     * 冒泡排序
+     * 冒泡排序方法入口1
+     * **/
+    public static <Item extends Comparable<? super Item>> void bubbleSort(ArrayList<Item> arr, int key){
+        bubble(arr, key);
+    }
+
+    /**
+     * 冒泡排序方法入口2
+     * **/
+    public static <Item extends Comparable<? super Item>> void bubbleSort(ArrayList<Item> arr){
+        bubble(arr, 1);
+    }
+
+    /**
+     * 冒泡排序主方法
      * @param arr ArrayList<Item>: 待排序数组
      * @param key int: 排序选项，当传入非负数时按增序排序，当传入负数时按降序排序
      * **/
-    public static <Item extends Comparable<? super Item>> void bubbleSort(ArrayList<Item> arr, int key){
+    private static <Item extends Comparable<? super Item>> void bubble(ArrayList<Item> arr, int key){
         for (int i = 0; i < arr.size(); i++) {
             for (int j = 0; j < arr.size() - i - 1; j++) {
                 if (!isMatchRule(arr.get(j), arr.get(j + 1), key)){
@@ -101,11 +154,25 @@ public class arraySort {
     }
 
     /**
-     * 二分插入排序
+     * 二分插入排序方法入口1
+     * **/
+    public static <Item extends Comparable<? super Item>> void binarySort(ArrayList<Item> arr, int key){
+        _binarySort(arr, key);
+    }
+
+    /**
+     * 二分插入排序方法入口2
+     * **/
+    public static <Item extends Comparable<? super Item>> void binarySort(ArrayList<Item> arr){
+        _binarySort(arr, 1);
+    }
+
+    /**
+     * 二分插入排序主方法
      * @param arr ArrayList<Item>: 待排序数组
      * @param key int: 排序选项，当传入非负数时按增序排序，当传入负数时按降序排序
      * **/
-    public static <Item extends Comparable<? super Item>> void binarySort(ArrayList<Item> arr, int key){
+    private static <Item extends Comparable<? super Item>> void _binarySort(ArrayList<Item> arr, int key){
         for (int i = 1; i < arr.size(); i++) {
             int index = binaryIndex(arr, i, key);
             Item tmp = arr.remove(i);
@@ -169,7 +236,7 @@ public class arraySort {
     }
 
     /**
-     * 归并排序
+     * 归并排序方法入口1
      * @param arr ArrayList<Item>: 待排序数组
      * @param key int: 排序选项，当传入非负数时按增序排序，当传入负数时按降序排序
      *
@@ -177,6 +244,16 @@ public class arraySort {
      * **/
     public static <Item extends Comparable<? super Item>> ArrayList<Item> mergeSort(ArrayList<Item> arr, int key){
         return recursionMerge(arr, key);
+    }
+
+    /**
+     * 归并排序方法入口2
+     * @param arr ArrayList<Item>: 待排序数组
+     *
+     * @return ArrayList<Item>: 排好序后的数组片段
+     * **/
+    public static <Item extends Comparable<? super Item>> ArrayList<Item> mergeSort(ArrayList<Item> arr){
+        return recursionMerge(arr, 1);
     }
 
     /**
@@ -211,6 +288,13 @@ public class arraySort {
         return cut3;
     }
 
+    /**
+     * 按照特定的间隔数插入排序指定的序列
+     * @param arr ArrayList<Item>: 待排序数组
+     * @param gap int: 指定的间隔
+     * @param begin int: 开始的元素索引位置
+     * @param key int: 排序选项，当传入非负数时按增序排序，当传入负数时按降序排序
+     * **/
     private static <Item extends Comparable<? super Item>> void gapInsert(ArrayList<Item> arr, int gap, int begin, int key){
         for (int j = begin; j > 0; j -= gap) {
             if (!isMatchRule(arr.get(j - gap), arr.get(j), key)){
@@ -221,11 +305,66 @@ public class arraySort {
         }
     }
 
+    /**
+     * 希尔排序入口1
+     * **/
     public static <Item extends Comparable<? super Item>> void shellSort(ArrayList<Item> arr, int key){
+        shell(arr, key);
+    }
+
+    /**
+     * 希尔排序入口2
+     * **/
+    public static <Item extends Comparable<? super Item>> void shellSort(ArrayList<Item> arr){
+        shell(arr, 1);
+    }
+
+    /**
+     * 希尔排序主方法
+     * @param arr ArrayList<Item>: 待排序数组
+     * @param key int: 排序选项，当传入非负数时按增序排序，当传入负数时按降序排序
+     * **/
+    private static <Item extends Comparable<? super Item>> void shell(ArrayList<Item> arr, int key){
         for (int j = arr.size(); j >= 1; j /= 2){
             for (int i = j; i < arr.size(); i += j) {
                 gapInsert(arr, j, i, key);
             }
+        }
+    }
+
+    public static <Item extends Comparable<? super Item>> void quickSort(ArrayList<Item> arr){
+        _quickSort(arr, 0, arr.size() - 1, 1);
+    }
+
+    public static <Item extends Comparable<? super Item>> void quickSort(ArrayList<Item> arr, int key){
+        _quickSort(arr, 0, arr.size() - 1, key);
+    }
+
+    private static <Item extends Comparable<? super Item>> void _quickSort(ArrayList<Item> arr, int l_bound, int r_bound, int key){
+        if (l_bound < r_bound){
+            int left = l_bound;
+            int right = r_bound;
+            Item tmp = arr.get(l_bound);
+            int flag = -1;
+            while (left < right){
+                if (flag == -1){
+                    if (isMatchRule(tmp, arr.get(right), true, key)){
+                        right -= 1;
+                    }else {
+                        exchange(arr, left, right);
+                        flag = 1;
+                    }
+                }else {
+                    if (isMatchRule(arr.get(left), tmp, true, key)){
+                        left += 1;
+                    }else {
+                        exchange(arr, left, right);
+                        flag = -1;
+                    }
+                }
+            }
+            _quickSort(arr, l_bound, left - 1, key);
+            _quickSort(arr, right + 1, r_bound, key);
         }
     }
 }

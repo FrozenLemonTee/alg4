@@ -8,13 +8,13 @@ package DSAA.alg4.c2.transaction_c21;
 
 import java.util.Objects;
 
-public class Transaction implements Comparable<Transaction>{
+public class Transaction implements Transactions{
     /** 交易人 **/
-    private final String who;
+    private String who;
     /** 交易日期 **/
-    private final Date when;
+    private Date when;
     /** 交易金额 **/
-    private final double amount;
+    private double amount;
 
     /**
      * 当交易人、交易日期、交易金额分别传入时调用此构造函数
@@ -33,10 +33,7 @@ public class Transaction implements Comparable<Transaction>{
      * @param transaction String: 交易信息的格式化字符串
      * **/
     public Transaction(String transaction){
-        String[] t = transaction.split("[:@]");
-        this.who = t[2];
-        this.when = new Date(t[0]);
-        this.amount = Double.parseDouble(t[1]);
+        this.formatString(transaction);
     }
 
     /**
@@ -100,7 +97,7 @@ public class Transaction implements Comparable<Transaction>{
     /**
      * 比较函数，比较两个交易的排序意义的先后
      * 先按交易日期增序排序，若相同则按交易金额降序排序，仍相同则按交易人字符串的字典序增序排序
-     * @param o Transaction: 另一个交易
+     * @param transactions Transactions: 另一个交易
      *
      * @implSpec 实现了接口，见：
      * @see Comparable
@@ -108,18 +105,27 @@ public class Transaction implements Comparable<Transaction>{
      * @return int: 返回-1：当前交易在被比较交易前；返回1：当前交易在被比较交易后；返回0：当前交易与被比较交易相同
      * **/
     @Override
-    public int compareTo(Transaction o) {
-        if (this.equals(o)){
+    public int compareTo(Transactions transactions) {
+        Transaction another = (Transaction) transactions;
+        if (this.equals(another)){
             return 0;
         }
-        if (this.getWhen().compareTo(o.getWhen()) != 0){
-            return this.getWhen().compareTo(o.getWhen());
+        if (this.getWhen().compareTo(another.getWhen()) != 0){
+            return this.getWhen().compareTo(another.getWhen());
         }
-        if (this.getAmount() > o.getAmount()){
+        if (this.getAmount() > another.getAmount()){
             return -1;
-        }else if (this.getAmount() < o.getAmount()){
+        }else if (this.getAmount() < another.getAmount()){
             return 1;
         }
-        return this.getWho().compareTo(o.getWho());
+        return this.getWho().compareTo(another.getWho());
+    }
+
+    @Override
+    public void formatString(String transaction) {
+        String[] t = transaction.split("[:@]");
+        this.who = t[2];
+        this.when = new Date(t[0]);
+        this.amount = Double.parseDouble(t[1]);
     }
 }

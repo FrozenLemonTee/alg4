@@ -8,13 +8,13 @@ package DSAA.alg4.c2.transaction_c21;
 
 import java.util.Objects;
 
-public class Date implements Comparable<Date>{
+public class Date implements Transactions{
     /** 储存天 **/
-    private final int day;
+    private int day;
     /** 储存月 **/
-    private final int month;
+    private int month;
     /** 储存年 **/
-    private final int year;
+    private int year;
 
     /**
      * 当年月日分别以整型形式传入时调用此构造函数
@@ -33,10 +33,7 @@ public class Date implements Comparable<Date>{
      * @param date String: 日期的格式化字符串，以"-"分隔
      * **/
     public Date(String date){
-        String[] d = date.split("-");
-        this.day = Integer.parseInt(d[2]);
-        this.month = Integer.parseInt(d[1]);
-        this.year = Integer.parseInt(d[0]);
+        this.formatString(date);
     }
 
     /**
@@ -74,7 +71,7 @@ public class Date implements Comparable<Date>{
 
     /**
      * 比较函数，比较两日期的先后
-     * @param another Date: 被比较的另一个日期
+     * @param transactions Transactions: 被比较的另一个日期
      *
      * @implSpec 实现了接口，见：
      * @see Comparable
@@ -82,7 +79,8 @@ public class Date implements Comparable<Date>{
      * @return int: 返回-1：当前日期早于被比较日期；返回1：当前日期晚于被比较日期；返回0：当前日期与被比较日期相同
      * **/
     @Override
-    public int compareTo(Date another) {
+    public int compareTo(Transactions transactions) {
+        Date another = (Date) transactions;
         if (this.equals(another)){
             return 0;
         }
@@ -125,5 +123,13 @@ public class Date implements Comparable<Date>{
     @Override
     public int hashCode() {
         return Objects.hash(this.day, this.month, this.year);
+    }
+
+    @Override
+    public void formatString(String date) {
+        String[] d = date.split("-");
+        this.day = Integer.parseInt(d[2]);
+        this.month = Integer.parseInt(d[1]);
+        this.year = Integer.parseInt(d[0]);
     }
 }
